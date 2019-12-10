@@ -1,9 +1,16 @@
 const express = require('express');
+const db = require("./postDb");
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  // do your magic!
+  db.get()
+    .then(posts => {
+      return res.status(200).json(posts)
+    })
+    .catch(err => {
+      return res.status(500).json({ message: "Cannot reach page."})
+    })
 });
 
 router.get('/:id', (req, res) => {

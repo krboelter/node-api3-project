@@ -3,7 +3,11 @@ const db = require("./userDb")
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/:id/posts', (req, res) => {
+  // do your magic!
+});
+
+router.get('/', (req, res) => {
   db.get()
     .then(users => {
       return res.status(200).json(users)
@@ -13,16 +17,8 @@ router.post('/', (req, res) => {
     })
 });
 
-router.post('/:id/posts', (req, res) => {
-  // do your magic!
-});
-
-router.get('/', (req, res) => {
-  // do your magic!
-});
-
-router.get('/:id', (req, res) => {
-  // do your magic!
+router.get('/:id',validateUserId(), (req, res) => {
+  res.status(200).json(req.user)
 });
 
 router.get('/:id/posts', (req, res) => {
@@ -39,8 +35,17 @@ router.put('/:id', (req, res) => {
 
 //custom middleware
 
-function validateUserId(req, res, next) {
-  // do your magic!
+function validateUserId() {
+  return (req, res, next)  => {
+    db.getById()
+      .then(user => {
+        req.user = user
+        next()
+      })
+      .catch(err => {
+        json.sttaus(500).json({ message: "Internal server error..."})
+      })
+  }
 }
 
 function validateUser(req, res, next) {

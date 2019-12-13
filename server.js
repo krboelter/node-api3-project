@@ -5,8 +5,9 @@ const usersRouter = require("./users/userRouter")
 const postsRouter = require("./posts/postRouter")
 
 server.use(express.json())
+server.use(logger)
 
-server.get("/", (res, req) => {
+server.get("/", (req, res) => {
   res.json({
       message: "Welcome to the API",
       connection: process.env.CONNECTION

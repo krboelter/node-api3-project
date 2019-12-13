@@ -1,5 +1,5 @@
 const server = require("./server")
-const host = proess.env.HOST || "0.0.0.0"
+const host = process.env.HOST || "0.0.0.0"
 const port = process.env.PORT || 8080
 
 server.get("/", (res, req) => {
